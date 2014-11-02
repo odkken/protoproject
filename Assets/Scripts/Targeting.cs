@@ -8,68 +8,72 @@ namespace Assets.Scripts
     public class Targeting : MonoBehaviour
     {
 
-        public List<Targetable> potentialTargets = new List<Targetable>();
-        public float targetCone = .75f;
-        public Targetable currentTarget;
+        public List<Targetable> PotentialTargets = new List<Targetable>();
+        public float TargetCone = .75f;
+        public Targetable CurrentTarget;
+        private FillBar mainTargetHealth;
 
         // Use this for initialization
 
-        void Awake()
+        private void Awake()
         {
             Singleton<TargetManager>.Instance.Register(this);
 
         }
-        void Start()
+
+        private void Start()
         {
+            mainTargetHealth = GameObject.Find("EnemyPortrait").GetComponentInChildren<FillBar>();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            potentialTargets.Sort((a, b) => (a.transform.position - transform.position).sqrMagnitude.CompareTo((b.transform.position - transform.position).sqrMagnitude));
-            if (Input.GetKeyDown(KeyCode.Tab))
+            PotentialTargets.Sort((a, b) => (a.transform.position - transform.position).sqrMagnitude.CompareTo((b.transform.position - transform.position).sqrMagnitude));
+            if (Input.GetKeyDown(KeyCode.Tab) && PotentialTargets.Any())
+                SwitchTarget();
+            if (CurrentTarget != null)
+                mainTargetHealth.SetFraction(CurrentTarget.GetHealthFraction());
+        }
+
+        private void SwitchTarget()
+        {
+            if (CurrentTarget == null)
             {
-                if (potentialTargets.Any())
-                    if (currentTarget == null)
-                    {
-                        currentTarget = potentialTargets.First();
-                        currentTarget.Target();
-                    }
+                CurrentTarget = PotentialTargets.First();
+                CurrentTarget.Target();
+            }
+            else
+            {
+                var targetsInFront = PotentialTargets.Where(a => Vector3.Dot((a.transform.position - transform.position).normalized, transform.up) > TargetCone).ToList();
+                if (targetsInFront.Any())
+                {
+                    Targetable nextTarget;
+                    if (!targetsInFront.Contains(CurrentTarget))
+                        nextTarget = targetsInFront.First();
                     else
                     {
-                        var targetsInFront = potentialTargets.Where(a => Vector3.Dot((a.transform.position - transform.position).normalized, transform.up) > targetCone).ToList();
-                        if (targetsInFront.Any())
+                        var nextIndex = targetsInFront.IndexOf(CurrentTarget) + 1;
+                        if (nextIndex >= targetsInFront.Count)
                         {
-                            Targetable nextTarget;
-                            if (!targetsInFront.Contains(currentTarget))
-                                nextTarget = targetsInFront.First();
-                            else
-                            {
-
-                                var nextIndex = targetsInFront.IndexOf(currentTarget) + 1;
-                                if (nextIndex >= targetsInFront.Count)
-                                {
-                                    nextIndex = nextIndex - targetsInFront.Count;
-                                }
-                                nextTarget = targetsInFront[nextIndex];
-                            }
-                            currentTarget.UnTarget();
-                            currentTarget = nextTarget;
-                            currentTarget.Target();
+                            nextIndex = nextIndex - targetsInFront.Count;
                         }
+                        nextTarget = targetsInFront[nextIndex];
                     }
+                    CurrentTarget.UnTarget();
+                    CurrentTarget = nextTarget;
+                    CurrentTarget.Target();
+                }
             }
-
         }
 
         public void OnNewTargetCreated(Targetable targetable)
         {
-            if (!potentialTargets.Contains(targetable))
+            if (!PotentialTargets.Contains(targetable))
             {
-                potentialTargets.Add(targetable);
+                PotentialTargets.Add(targetable);
             }
         }
-
 
 
     }
