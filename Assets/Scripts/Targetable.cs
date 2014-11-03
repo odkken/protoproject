@@ -1,4 +1,6 @@
-﻿using Assets.Scripts;
+﻿using System;
+using Assets;
+using Assets.Scripts;
 using UnityEngine;
 using System.Collections;
 
@@ -6,7 +8,8 @@ public class Targetable : MonoBehaviour
 {
     private bool isTargeted;
     private SpriteRenderer targetCircle;
-    private Life life;
+    public Life life;
+    private StatusManager statusManager;
     // Use this for initialization
     void Start()
     {
@@ -23,6 +26,15 @@ public class Targetable : MonoBehaviour
             life.Health -= Time.deltaTime * 20;
     }
 
+    public void UseAbility(Ability ability)
+    {
+        foreach (var statusEffect in ability.Statuses)
+        {
+            if (statusManager.AddStatusEffect(statusEffect))
+                Debug.Log("Added Effect " + statusEffect.GetType().Name);
+        }
+    }
+
     public float GetHealthFraction()
     {
         return life.Health / life.MaxHealth;
@@ -37,4 +49,10 @@ public class Targetable : MonoBehaviour
     {
         targetCircle.enabled = false;
     }
+
+    public void OnMouseDown()
+    {
+        FindObjectOfType<PlayerController>().GetComponent<Targeting>().SetTarget(this);
+    }
+
 }

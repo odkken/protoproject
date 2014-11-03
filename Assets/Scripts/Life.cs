@@ -12,9 +12,21 @@ public class Life : MonoBehaviour
         Health = MaxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    public float ModifyHealthByScalar(float scalarAmount)
+    {
+        return Health = Mathf.Clamp(Health + scalarAmount, 0, MaxHealth);
     }
+
+    public float ModifyHealthByPercentOfCurrentHealth(float percentAmount)
+    {
+        return Health = Mathf.Clamp(Health + Health * percentAmount, 0, MaxHealth);
+    }
+
+    public float ModifyHealthByPercentOfMaxHealth(float percentAmount)
+    {
+        return Health = Mathf.Clamp(Health + MaxHealth * percentAmount, 0, MaxHealth);
+    }
+
+
 }

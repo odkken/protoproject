@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Assets.Scripts.StatusEffects
 {
     public class SpeedStatus : StatusEffect
     {
 
-        public override void UpdateStatus()
+        public override IEnumerator UpdateStatus()
         {
             throw new System.NotImplementedException();
         }

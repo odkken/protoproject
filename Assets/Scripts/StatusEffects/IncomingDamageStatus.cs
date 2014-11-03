@@ -1,9 +1,11 @@
-﻿namespace Assets.Scripts.StatusEffects
+﻿using System.Collections;
+
+namespace Assets.Scripts.StatusEffects
 {
     public class IncomingDamageStatus : StatusEffect
     {
 
-        public override void UpdateStatus()
+        public override IEnumerator UpdateStatus()
         {
             throw new System.NotImplementedException();
         }

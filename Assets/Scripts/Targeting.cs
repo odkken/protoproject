@@ -67,6 +67,24 @@ namespace Assets.Scripts
             }
         }
 
+        public void SetTarget(Targetable target)
+        {
+            var index = PotentialTargets.IndexOf(target);
+            if (index >= 0)
+            {
+                if (CurrentTarget != null)
+                {
+                    CurrentTarget.UnTarget();
+                }
+                CurrentTarget = PotentialTargets[index];
+                CurrentTarget.Target();
+            }
+            else
+            {
+                Debug.Log("Couldn't find target in list!");
+            }
+        }
+
         public void OnNewTargetCreated(Targetable targetable)
         {
             if (!PotentialTargets.Contains(targetable))
