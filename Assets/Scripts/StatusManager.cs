@@ -20,6 +20,7 @@ namespace Assets.Scripts
             if (!activeStatusEffects.Select(a => a.GetType()).Contains(effect.GetType()))
             {
                 activeStatusEffects.Add(effect);
+                effect.BeginEffect(GetComponent<Targetable>());
                 return true;
             }
             return false;

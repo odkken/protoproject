@@ -11,12 +11,16 @@ namespace Assets.Scripts
         public bool Expired { get; private set; }
 
         public float StartTime { get; private set; }
-        protected Targetable player;
+        protected Targetable Player;
 
         // Use this for initialization
         void Start()
         {
-            player = GetComponent<Targetable>();
+        }
+
+        public void BeginEffect(Targetable onPlayer)
+        {
+            Player = onPlayer;
             StartTime = Time.time;
             StartCoroutine(UpdateStatus());
         }
@@ -26,6 +30,8 @@ namespace Assets.Scripts
         {
             if (Time.time - StartTime > Duration)
                 Expired = true;
+            if (Expired)
+                Destroy(gameObject);
         }
 
         public abstract IEnumerator UpdateStatus();

@@ -1,27 +1,17 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.StatusEffects;
+using UnityEngine;
 
 namespace Assets.Scripts.Abilities
 {
     public class Corruption : Ability
     {
-        // Use this for initialization
-        void Start()
+        public Corruption()
         {
             Statuses = new List<StatusEffect>
             {
-                new HealthOverTimeStatus()
-                {
-                    Duration = 10f,
-                    ScalarHps = 10f,
-                }
+                (StatusEffect)Object.Instantiate(Resources.Load<HealthOverTimeStatus>("Prefabs/StatusEffects/CorruptionEffect"),Vector3.zero, Quaternion.identity)
             };
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }

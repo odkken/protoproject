@@ -17,16 +17,15 @@ public class Targetable : MonoBehaviour
         targetCircle = transform.FindChild("TargetCircle").GetComponent<SpriteRenderer>();
         targetCircle.enabled = false;
         life = GetComponent<Life>();
+        statusManager = GetComponent<StatusManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (targetCircle.enabled)
-            life.Health -= Time.deltaTime * 20;
     }
 
-    public void UseAbility(Ability ability)
+    public void UseAbilityOn(Ability ability)
     {
         foreach (var statusEffect in ability.Statuses)
         {
