@@ -31,7 +31,7 @@ namespace Assets.Scripts
             if (Time.time - StartTime > Duration)
                 Expired = true;
             if (Expired)
-                Destroy(gameObject);
+                DestroyImmediate(gameObject);
         }
 
         public abstract IEnumerator UpdateStatus();

@@ -7,7 +7,7 @@ namespace Assets.Scripts
 {
     public class StatusManager : MonoBehaviour
     {
-        private List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
+        public List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
         // Use this for initialization
         void Start()
         {
@@ -19,8 +19,9 @@ namespace Assets.Scripts
         {
             if (!activeStatusEffects.Select(a => a.GetType()).Contains(effect.GetType()))
             {
-                activeStatusEffects.Add(effect);
-                effect.BeginEffect(GetComponent<Targetable>());
+                var actualEffect = (StatusEffect)Instantiate(effect);
+                activeStatusEffects.Add(actualEffect);
+                actualEffect.BeginEffect(GetComponent<Targetable>());
                 return true;
             }
             return false;

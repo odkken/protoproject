@@ -8,7 +8,7 @@ namespace Assets.Scripts
     public class Targeting : MonoBehaviour
     {
 
-        public List<Targetable> PotentialTargets = new List<Targetable>();
+        public List<Targetable> PotentialTargets;
         public float TargetCone = .75f;
         public Targetable CurrentTarget;
         private FillBar mainTargetHealth;
@@ -23,6 +23,7 @@ namespace Assets.Scripts
 
         private void Start()
         {
+            PotentialTargets = new List<Targetable>();
             mainTargetHealth = GameObject.Find("EnemyPortrait").GetComponentInChildren<FillBar>();
         }
 
@@ -36,8 +37,10 @@ namespace Assets.Scripts
                 mainTargetHealth.SetFraction(CurrentTarget.GetHealthFraction());
         }
 
-        private void SwitchTarget()
+        public void SwitchTarget()
         {
+            if (!PotentialTargets.Any()) return;
+
             if (CurrentTarget == null)
             {
                 CurrentTarget = PotentialTargets.First();
