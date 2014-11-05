@@ -3,14 +3,8 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Ability : MonoBehaviour
+    public abstract class Ability
     {
         public List<StatusEffect> Statuses;
-
-        void Start()
-        {
-            Debug.Log(name + gameObject.activeSelf + ", " + gameObject.activeInHierarchy);
-        }
-
     }
 }

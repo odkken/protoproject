@@ -7,7 +7,7 @@ namespace Assets.Scripts
 {
     public class StatusManager : MonoBehaviour
     {
-        public List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
+        public List<StatusEffect> ActiveStatusEffects = new List<StatusEffect>();
         // Use this for initialization
         void Start()
         {
@@ -17,11 +17,10 @@ namespace Assets.Scripts
 
         public bool AddStatusEffect(StatusEffect effect)
         {
-            if (!activeStatusEffects.Select(a => a.GetType()).Contains(effect.GetType()))
+            if (!ActiveStatusEffects.Select(a => a.GetType()).Contains(effect.GetType()))
             {
-                var actualEffect = (StatusEffect)Instantiate(effect);
-                activeStatusEffects.Add(actualEffect);
-                actualEffect.BeginEffect(GetComponent<Targetable>());
+                ActiveStatusEffects.Add(effect);
+                effect.BeginEffect(GetComponent<Targetable>());
                 return true;
             }
             return false;
@@ -30,7 +29,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-            activeStatusEffects.Where(a => a.Expired).ToList().ForEach(a => activeStatusEffects.Remove(a));
+            ActiveStatusEffects.Where(a => a.Expired).ToList().ForEach(a => ActiveStatusEffects.Remove(a));
         }
     }
 }

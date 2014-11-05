@@ -10,15 +10,12 @@ namespace Assets
 
         void Start()
         {
-            foreach (var ability in Abilities)
-            {
-                Debug.Log(ability.name);
-            }
+            Abilities = new List<Ability>();
         }
 
         void Update()
         {
-            
+
         }
 
 

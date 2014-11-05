@@ -51,7 +51,8 @@ public class Targetable : MonoBehaviour
 
     public void OnMouseDown()
     {
-        FindObjectOfType<PlayerController>().GetComponent<Targeting>().SetTarget(this);
+        if (enabled)
+            FindObjectOfType<PlayerController>().GetComponent<Targeting>().SetTarget(this);
     }
 
 }

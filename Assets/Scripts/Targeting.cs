@@ -30,6 +30,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         private void Update()
         {
+            PotentialTargets = PotentialTargets.Where(a => a != null && a.gameObject != null && a.enabled).ToList();
             PotentialTargets.Sort((a, b) => (a.transform.position - transform.position).sqrMagnitude.CompareTo((b.transform.position - transform.position).sqrMagnitude));
             if (Input.GetKeyDown(KeyCode.Tab) && PotentialTargets.Any())
                 SwitchTarget();

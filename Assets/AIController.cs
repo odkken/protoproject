@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts;
+using Assets.Scripts.Abilities;
 using UnityEngine;
 
 namespace Assets
@@ -10,10 +12,13 @@ namespace Assets
         public float DirChangeInterval = 1;
         private Animator animator;
         private int currentDirection;
+        private AbilityManager abilityManager;
         // Use this for initialization
         void Start()
         {
             animator = GetComponent<Animator>();
+            abilityManager = GetComponent<AbilityManager>();
+            abilityManager.Abilities = new List<Ability> { new CorruptionAbility() };
             StartCoroutine(ChooseDirection());
             StartCoroutine(TargetAndCast());
         }
@@ -31,7 +36,6 @@ namespace Assets
         IEnumerator TargetAndCast()
         {
             var targeting = GetComponent<Targeting>();
-            var abilityManager = GetComponent<AbilityManager>();
             while (true)
             {
                 targeting.SwitchTarget();

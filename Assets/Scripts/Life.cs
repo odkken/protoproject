@@ -4,7 +4,20 @@ using System.Collections;
 public class Life : MonoBehaviour
 {
     public float MaxHealth;
-    public float Health { get; set; }
+
+    private float health;
+
+    public float Health
+    {
+        get { return health; }
+
+        set
+        {
+            health = Mathf.Clamp(value, 0, MaxHealth);
+            if (health <= 0)
+                Destroy(gameObject);
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -15,17 +28,17 @@ public class Life : MonoBehaviour
 
     public float ModifyHealthByScalar(float scalarAmount)
     {
-        return Health = Mathf.Clamp(Health + scalarAmount, 0, MaxHealth);
+        return Health += scalarAmount;
     }
 
     public float ModifyHealthByPercentOfCurrentHealth(float percentAmount)
     {
-        return Health = Mathf.Clamp(Health + Health * percentAmount, 0, MaxHealth);
+        return Health += Health * percentAmount;
     }
 
     public float ModifyHealthByPercentOfMaxHealth(float percentAmount)
     {
-        return Health = Mathf.Clamp(Health + MaxHealth * percentAmount, 0, MaxHealth);
+        return Health += MaxHealth * percentAmount;
     }
 
 

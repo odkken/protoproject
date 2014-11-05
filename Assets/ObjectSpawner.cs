@@ -17,7 +17,7 @@ namespace Assets
 
         IEnumerator Spawn()
         {
-            while (true)
+            while (enabled)
             {
                 Instantiate(ObjectsToSpawn[Random.Range(0, ObjectsToSpawn.Count)]);
                 yield return new WaitForSeconds(SpawnInterval);

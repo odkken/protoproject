@@ -6,14 +6,16 @@ namespace Assets.Scripts.Abilities
 {
     public class CorruptionAbility : Ability
     {
-        void Start()
+        public CorruptionAbility()
         {
+            Statuses = new List<StatusEffect>
+            {
+                new HealthOverTimeStatus
+                {
+                    Duration = 10f,
+                    ScalarHps = -50
+                }
+            };
         }
-
-        void Update()
-        {
-
-        }
-
     }
 }
