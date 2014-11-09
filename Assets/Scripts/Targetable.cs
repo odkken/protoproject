@@ -1,58 +1,63 @@
-﻿using System;
-using Assets;
-using Assets.Scripts;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 
-public class Targetable : MonoBehaviour
+namespace Assets.Scripts
 {
-    private bool isTargeted;
-    private SpriteRenderer targetCircle;
-    public Life life;
-    private StatusManager statusManager;
-    // Use this for initialization
-    void Start()
+    public class Targetable : MonoBehaviour
     {
-        Singleton<TargetManager>.Instance.NewTarget(this);
-        targetCircle = transform.FindChild("TargetCircle").GetComponent<SpriteRenderer>();
-        targetCircle.enabled = false;
-        life = GetComponent<Life>();
-        statusManager = GetComponent<StatusManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    public void UseAbilityOn(Ability ability)
-    {
-        foreach (var statusEffect in ability.Statuses)
+        public enum Team
         {
-            if (statusManager.AddStatusEffect(statusEffect))
-                Debug.Log("Added Effect " + statusEffect.GetType().Name);
+            EnemyAi,
+            Player,
+            Neutral
         }
-    }
 
-    public float GetHealthFraction()
-    {
-        return life.Health / life.MaxHealth;
-    }
+        public Team TeamType;
 
-    public void Target()
-    {
-        targetCircle.enabled = true;
-    }
 
-    public void UnTarget()
-    {
-        targetCircle.enabled = false;
-    }
+        //stuff we need from the gameobject
+        public Life Life;
+        private StatusManager statusManager;
 
-    public void OnMouseDown()
-    {
-        if (enabled)
-            FindObjectOfType<PlayerController>().GetComponent<Targeting>().SetTarget(this);
-    }
+        // Use this for initialization
+        void Start()
+        {
+            Singleton<TargetManager>.Instance.NewTarget(this);
+            Life = GetComponent<Life>();
+            statusManager = GetComponent<StatusManager>();
+        }
 
+        // Update is called once per frame
+        void Update()
+        {
+        }
+
+        public void UseAbilityOn(Ability ability)
+        {
+            foreach (var statusEffect in ability.Statuses)
+            {
+                if (statusManager.AddStatusEffect(statusEffect))
+                    Debug.Log("Added Effect " + statusEffect.GetType().Name);
+            }
+        }
+
+        public float GetHealthFraction()
+        {
+            return Life.Health / Life.MaxHealth;
+        }
+
+        public void Target()
+        {
+        }
+
+        public void UnTarget()
+        {
+        }
+
+        public void OnMouseDown()
+        {
+            if (enabled)
+                FindObjectOfType<PlayerController>().GetComponent<Targeter>().SetTarget(this);
+        }
+
+    }
 }

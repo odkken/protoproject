@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Targeting : MonoBehaviour
+    public class Targeter : MonoBehaviour
     {
 
-        public List<Targetable> PotentialTargets;
+        public List<Targetable> PotentialTargets = new List<Targetable>();
         public float TargetCone = .75f;
         public Targetable CurrentTarget;
         private FillBar mainTargetHealth;
@@ -23,7 +23,6 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            PotentialTargets = new List<Targetable>();
             mainTargetHealth = GameObject.Find("EnemyPortrait").GetComponentInChildren<FillBar>();
         }
 

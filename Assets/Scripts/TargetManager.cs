@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
     public class TargetManager : MonoBehaviour
     {
-        private readonly List<Targeting> targetingListeners = new List<Targeting>();
+        private readonly List<Targeter> targetingListeners = new List<Targeter>();
         // Use this for initialization
         void Start()
         {
@@ -26,7 +26,7 @@ namespace Assets.Scripts
             }
         }
 
-        public void Register(Targeting listener)
+        public void Register(Targeter listener)
         {
             if (!targetingListeners.Contains(listener))
             {

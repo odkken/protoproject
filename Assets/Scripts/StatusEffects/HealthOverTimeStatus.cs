@@ -14,9 +14,9 @@ namespace Assets.Scripts.StatusEffects
         {
             while (!Expired)
             {
-                Player.life.ModifyHealthByPercentOfCurrentHealth(PercentCurrentHps * UpdateInterval);
-                Player.life.ModifyHealthByPercentOfMaxHealth(PercentMaxHps * UpdateInterval);
-                Player.life.ModifyHealthByScalar(ScalarHps * UpdateInterval);
+                Player.Life.ModifyHealthByPercentOfCurrentHealth(PercentCurrentHps * UpdateInterval);
+                Player.Life.ModifyHealthByPercentOfMaxHealth(PercentMaxHps * UpdateInterval);
+                Player.Life.ModifyHealthByScalar(ScalarHps * UpdateInterval);
                 yield return new WaitForSeconds(UpdateInterval);
             }
         }
