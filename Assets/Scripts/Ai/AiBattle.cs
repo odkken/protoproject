@@ -11,10 +11,24 @@ namespace Assets.Scripts.Ai
     class AiBattle : MonoBehaviour
     {
 
+        public float AttackableNodeDistanceThreshold = .01f;
+
         //stuff we need from the gameobject
         private AbilityManager abilityManager;
         private Targeter targeter;
 
+        public bool NeedsToMove
+        {
+            get
+            {
+                if (targeter.CurrentTarget == null)
+                    return false;
+
+                return Vector2.Distance(transform.position, targeter.CurrentTarget.GetNearestAttackableNode(transform.position)) > AttackableNodeDistanceThreshold;
+                
+            }
+
+        }
 
         void Start()
         {

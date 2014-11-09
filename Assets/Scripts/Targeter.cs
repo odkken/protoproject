@@ -23,7 +23,7 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            mainTargetHealth = GameObject.Find("EnemyPortrait").GetComponentInChildren<FillBar>();
+            //mainTargetHealth = GameObject.Find("EnemyPortrait").GetComponentInChildren<FillBar>();
         }
 
         // Update is called once per frame
@@ -33,8 +33,8 @@ namespace Assets.Scripts
             PotentialTargets.Sort((a, b) => (a.transform.position - transform.position).sqrMagnitude.CompareTo((b.transform.position - transform.position).sqrMagnitude));
             if (Input.GetKeyDown(KeyCode.Tab) && PotentialTargets.Any())
                 SwitchTarget();
-            if (CurrentTarget != null)
-                mainTargetHealth.SetFraction(CurrentTarget.GetHealthFraction());
+            //if (CurrentTarget != null)
+                //mainTargetHealth.SetFraction(CurrentTarget.GetHealthFraction());
         }
 
         public void SwitchTarget()

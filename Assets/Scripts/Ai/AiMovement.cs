@@ -42,7 +42,6 @@ namespace Assets.Scripts.Ai
                 if (CurrentMovementMode == MovementMode.RandomWalk)
                 {
                     currentDirection = Random.Range(0, 4);
-                    animator.SetInteger("Direction(NSEW)", currentDirection);
                 }
                 yield return new WaitForSeconds(DirChangeInterval);
             }
@@ -71,6 +70,7 @@ namespace Assets.Scripts.Ai
                             velocityVector.x = -1;
                             break;
                     }
+                    animator.SetInteger("Direction(NSEW)", currentDirection);
 
                     if (targeter.CurrentTarget != null)
                     {
@@ -80,15 +80,18 @@ namespace Assets.Scripts.Ai
                     break;
                 case MovementMode.LockedOnTarget:
                     var target = targeter.CurrentTarget;
-                    var deltaS = target.transform.position - transform.position;
-                    if (deltaS.sqrMagnitude > 3)
+                    if (battler.NeedsToMove)
                     {
+                        var deltaS = target.GetNearestAttackableNode(transform.position) - (Vector2)transform.position;
                         velocityVector = deltaS.normalized;
+                        animator.SetBool("Walking", true);
                     }
                     else
                     {
-
+                        animator.SetBool("Walking", false);
                     }
+                    animator.SetFloat("VelX", velocityVector.x);
+                    animator.SetFloat("VelY", velocityVector.y);
                     break;
                 case MovementMode.ReturnToHome:
                     break;
