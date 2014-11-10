@@ -70,7 +70,6 @@ namespace Assets.Scripts.Ai
                             velocityVector.x = -1;
                             break;
                     }
-                    animator.SetInteger("Direction(NSEW)", currentDirection);
 
                     if (targeter.CurrentTarget != null)
                     {
@@ -84,12 +83,17 @@ namespace Assets.Scripts.Ai
                     {
                         var deltaS = target.GetNearestAttackableNode(transform.position) - (Vector2)transform.position;
                         velocityVector = deltaS.normalized;
+                        GetComponent<Rigidbody2D>().velocity = velocityVector * Speed;
                         animator.SetBool("Walking", true);
                     }
                     else
                     {
                         animator.SetBool("Walking", false);
+                        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     }
+                    var dir = target.GetDirectionVectorTo(transform.position);
+                    animator.SetFloat("DirX", dir.x);
+                    animator.SetFloat("DirY", dir.y);
                     animator.SetFloat("VelX", velocityVector.x);
                     animator.SetFloat("VelY", velocityVector.y);
                     break;
@@ -99,10 +103,6 @@ namespace Assets.Scripts.Ai
                     throw new ArgumentOutOfRangeException();
             }
 
-
-
-            transform.position = transform.position + velocityVector * Time.deltaTime * Speed;
-            animator.SetBool("Walking", velocityVector.sqrMagnitude > 0);
         }
     }
 }

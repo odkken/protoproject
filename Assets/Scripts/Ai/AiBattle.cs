@@ -16,24 +16,15 @@ namespace Assets.Scripts.Ai
         //stuff we need from the gameobject
         private AbilityManager abilityManager;
         private Targeter targeter;
+        private Animator animator;
 
-        public bool NeedsToMove
-        {
-            get
-            {
-                if (targeter.CurrentTarget == null)
-                    return false;
 
-                return Vector2.Distance(transform.position, targeter.CurrentTarget.GetNearestAttackableNode(transform.position)) > AttackableNodeDistanceThreshold;
-                
-            }
-
-        }
 
         void Start()
         {
             abilityManager = GetComponent<AbilityManager>();
             targeter = GetComponent<Targeter>();
+            animator = GetComponent<Animator>();
         }
 
         void Update()
@@ -44,7 +35,22 @@ namespace Assets.Scripts.Ai
                 if (enemyTargets.Any())
                     targeter.SetTarget(enemyTargets.First());
             }
+            animator.SetBool("Attacking", !NeedsToMove);
         }
+
+        public bool NeedsToMove
+        {
+            get
+            {
+                if (targeter.CurrentTarget == null)
+                    return false;
+
+                return Vector2.Distance(transform.position, targeter.CurrentTarget.GetNearestAttackableNode(transform.position)) > AttackableNodeDistanceThreshold;
+
+            }
+
+        }
+
 
     }
 }
