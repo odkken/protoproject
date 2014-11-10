@@ -38,6 +38,13 @@ namespace Assets.Scripts.Ai
             animator.SetBool("Attacking", !NeedsToMove);
         }
 
+
+        public Vector2 GetNodeDestinationLocation(Targetable target)
+        {
+            var pointOnTargetColliderBounds = target.GetNearestAttackableNode(transform.position);
+            return pointOnTargetColliderBounds + (pointOnTargetColliderBounds - (Vector2)target.transform.position).normalized * ((CircleCollider2D)collider2D).radius;
+        }
+
         public bool NeedsToMove
         {
             get
@@ -45,7 +52,7 @@ namespace Assets.Scripts.Ai
                 if (targeter.CurrentTarget == null)
                     return false;
 
-                return Vector2.Distance(transform.position, targeter.CurrentTarget.GetNearestAttackableNode(transform.position)) > AttackableNodeDistanceThreshold;
+                return Vector2.Distance(transform.position, GetNodeDestinationLocation(targeter.CurrentTarget)) > AttackableNodeDistanceThreshold;
 
             }
 

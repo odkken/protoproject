@@ -81,7 +81,8 @@ namespace Assets.Scripts.Ai
                     var target = targeter.CurrentTarget;
                     if (battler.NeedsToMove)
                     {
-                        var deltaS = target.GetNearestAttackableNode(transform.position) - (Vector2)transform.position;
+                        var destinationLocation = battler.GetNodeDestinationLocation(target);
+                        var deltaS = destinationLocation - (Vector2)transform.position;
                         velocityVector = deltaS.normalized;
                         GetComponent<Rigidbody2D>().velocity = velocityVector * Speed;
                         animator.SetBool("Walking", true);
