@@ -26,7 +26,6 @@ namespace Assets.Scripts
         //stuff we need from the gameobject
         public Life Life;
         private StatusManager statusManager;
-        private CircleCollider2D circleCollider;
 
         // Use this for initialization
         void Start()
@@ -34,7 +33,6 @@ namespace Assets.Scripts
             Singleton<TargetManager>.Instance.NewTarget(this);
             Life = GetComponent<Life>();
             statusManager = GetComponent<StatusManager>();
-            circleCollider = GetComponent<CircleCollider2D>();
         }
 
         // Update is called once per frame
