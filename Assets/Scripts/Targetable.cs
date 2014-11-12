@@ -23,6 +23,9 @@ namespace Assets.Scripts
         }
 
 
+        public int TargetCircleAnchor;
+        public int TargetCircleWidth;
+
         //stuff we need from the gameobject
         public Life Life;
         private StatusManager statusManager;
